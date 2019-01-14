@@ -16,5 +16,16 @@ PrimeChecker.prototype.numberIsPrime = function (number) {
   return true;
 };
 
+PrimeChecker.prototype.bindEvents = function () {
+  PubSub.subscribe('FormView:number-submitted', (event) => {
+  const inputNumber = event.detail;
+  // console.log('payload received in PrimeChecker:', inputNumber);
+  const result = this.numberIsPrime(inputNumber);
+  PubSub.publish('PrimeChecker:result-calculated', result)
+  // console.log(result)
+  });
+};
+
+
 
 module.exports = PrimeChecker;

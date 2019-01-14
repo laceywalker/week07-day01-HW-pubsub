@@ -11,10 +11,17 @@ ResultView.prototype.displayResult = function (result) {
     resultElement.textContent = `Yes, it's a prime number!`
   }
   else {
-    resultElement.textContent = `This is not a prime number, dumbo!`
+    resultElement.textContent = `No, it's not a prime number!`
   }
 };
 
+ResultView.prototype.bindEvents = function () {
+  PubSub.subscribe('PrimeChecker:result-calculated', (event) => {
+    const primeOrNot = event.detail;
+    // console.log('payload received in ResultView:', primeOrNot);
+    this.displayResult(primeOrNot);
+  })
+};
 
 
 module.exports = ResultView;
